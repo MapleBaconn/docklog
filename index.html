@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>DockLog</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -34,6 +36,7 @@
   --shadow:0 1px 3px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html{-webkit-text-size-adjust:100%; touch-action:manipulation;}
 html,body{height:100%;}
 body{
   margin:0; background:var(--bg); color:var(--ink);
@@ -74,8 +77,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .bigbtn{background:var(--surface2);border:1.5px solid var(--line);border-radius:12px;padding:16px 10px;text-align:center;font-weight:600;font-size:15px;}
 .bigbtn.on{border-color:var(--accent);background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--accent);}
 label.f{display:block;margin:12px 0 4px;font-size:12.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
-input[type=text],input[type=number],input[type=date],input[type=time],select,textarea{
-  width:100%;font:inherit;color:var(--ink);background:var(--surface2);border:1px solid var(--line);
+input[type=text],input[type=number],input[type=date],input[type=time],input[type=password],select,textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--surface2);border:1px solid var(--line);
   border-radius:10px;padding:11px 12px;}
 textarea{min-height:64px;resize:vertical;}
 .kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);gap:10px;}
@@ -1169,6 +1172,9 @@ render();
 if("serviceWorker" in navigator && location.protocol==="https:"){
   navigator.serviceWorker.register("sw.js").catch(()=>{});
 }
+// Kill pinch-zoom and double-tap zoom on iOS
+document.addEventListener("gesturestart",ev=>ev.preventDefault());
+document.addEventListener("gesturechange",ev=>ev.preventDefault());
 // Ask iOS to treat our storage as persistent (best-effort)
 try{ if(navigator.storage&&navigator.storage.persist) navigator.storage.persist().catch(()=>{}); }catch(e){}
 // Catch up the auto-backup if data changed while offline
